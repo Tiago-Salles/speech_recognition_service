@@ -14,11 +14,6 @@ type Endpoint struct {
 	method     HandlerMethod
 }
 
-type HttpResponse struct {
-	statusCode int
-	data       any
-}
-
 func hello(w http.ResponseWriter, r *http.Request) error {
 	data := make(map[string]string)
 	data["message"] = "Olá"
@@ -40,20 +35,18 @@ func writeResponse(w http.ResponseWriter, httpResponse HttpResponse) error {
 	return response
 }
 
-func InitializeEndpoints() []Endpoint {
-	endpoints := []Endpoint{}
-
-	return endpoints
-}
-
-func main() {
-	fmt.Print("Initialing server...")
-	endpoints := InitializeEndpoints()
+func InitializeEndpoints() {
+	var endpoints []Endpoint
 
 	for _, endpoint := range endpoints {
 		http.HandleFunc(endpoint.path, endpoint.method)
 	}
+}
 
+func main() {
+	fmt.Print("Initializing server...")
+	InitializeEndpoints()
 	http.ListenAndServe(":3000", nil)
-	fmt.Print("Server initialized")
+	var content string = Run_speech_recognition()
+	fmt.Print(content)
 }
